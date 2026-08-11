@@ -3,6 +3,8 @@ package com.smartbakingsystem.Enumeration;
 public enum KycStatus {
 	PENDING,
 	VERIFIED,
-	REJECTED
+	REJECTED,
+	UNDER_REVIEW,
+	EXPIRED
 
 }

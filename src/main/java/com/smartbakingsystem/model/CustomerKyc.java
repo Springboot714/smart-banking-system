@@ -5,8 +5,8 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.smartbakingsystem.Enumeration.AddressStatus;
-import com.smartbakingsystem.Enumeration.AddressType;
+import com.smartbakingsystem.Enumeration.KycStatus;
+import com.smartbakingsystem.Enumeration.KycType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,8 +16,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,53 +26,43 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Table(name="addresses")
+@NoArgsConstructor
 @Builder
-public class Address {
+@Transactional
+@Table(name = "customer_kyc")
+public class CustomerKyc {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long addressId;
+	private int kycId;
 	
-	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
-	private AddressType addressType; 
+	private KycType kycType;
 	
-	@Column(nullable = false)
-	private String addressLine1;
+	@Column(nullable = false ,unique = true)
+	private Long aadhaarNumber;
 	
-	private String addressLine2;
+	@Column(nullable = false ,unique = true)
+	private Long panNumber;
 	
-	private String landmark;
-	
-	@Column(nullable = false)
-	private String city;
-	
-	@Column(nullable = false)
-	private String district;
-	
-	@Column(nullable = false)
-	private String state;
-	
-	@Column(nullable = false)
-	private String country;
-	
-	@Column(nullable = false)
-	private String postalCode;
-	
-	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
-	private AddressStatus addressStatus;
+	private KycStatus kycStatus;
+	
+	
+	private LocalDateTime verificationDate;
+	
+	private String rejectionReason;
+	
+	private String verifiedBy;
 	
 	@CreationTimestamp
-    private LocalDateTime createdAt;
+	private LocalDateTime createdAt;
 	
 	@UpdateTimestamp
-    private LocalDateTime updatedAt;
+	private LocalDateTime updatedAt;
 	
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "customer_id",nullable = false, unique = true)
 	private Customer customer;
 

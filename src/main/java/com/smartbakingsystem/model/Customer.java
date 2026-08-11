@@ -22,8 +22,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -31,6 +33,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "customers")
 public class Customer {
 	
@@ -59,17 +62,10 @@ public class Customer {
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
 	
-	@Column(nullable = false,unique = true)
-	private String aadhaarNumber;
-	
-	@Column(nullable = false,unique = true)
-	private String panNumber;
 	
 	@Enumerated(EnumType.STRING)
 	private CustomerStatus customerStatus;
 	
-	@Enumerated(EnumType.STRING)
-	private KycStatus kycStatus;
 	
 	@CreationTimestamp
 	private LocalDateTime createdAt;
@@ -77,8 +73,11 @@ public class Customer {
 	@UpdateTimestamp
 	private LocalDateTime updatedAt;
 	
-	@OneToMany(mappedBy = "customers",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
 	private List<Address> addresses;
+	
+	@OneToOne(mappedBy = "customer",cascade = CascadeType.ALL)
+	private CustomerKyc customerKyc;
 	
 	
 	
