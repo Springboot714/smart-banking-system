@@ -3,6 +3,9 @@ package com.smartbakingsystem.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import com.smartbakingsystem.Enumeration.AddressStatus;
@@ -68,6 +71,32 @@ public class CustomerCreationMapper {
 		customer.setCustomerKyc(customerKyc);
 		return customer;
 						   
+		
+	}
+	
+	public static Pageable findTheCustomerWithFilter(int page, int size, String sortBy, String direction) {
+		
+		Sort sort;
+		
+		if(page<0) {
+			page=0;
+		}
+		if(size<=0 || size>100) {
+			size=10;
+			
+		}
+		
+		if(direction.equalsIgnoreCase("desc")) {
+			sort=Sort.by(sortBy).descending();
+		}
+		else {
+			sort = Sort.by(sortBy).ascending();
+		}
+		
+		Pageable pageable= PageRequest.of(page, size, sort);
+		
+		return pageable;
+		
 		
 	}
 
