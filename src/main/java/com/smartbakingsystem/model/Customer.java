@@ -27,7 +27,9 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Data
@@ -73,9 +75,13 @@ public class Customer {
 	@UpdateTimestamp
 	private LocalDateTime updatedAt;
 	
+	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
 	@OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
 	private List<Address> addresses;
 	
+	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
 	@OneToOne(mappedBy = "customer",cascade = CascadeType.ALL)
 	private CustomerKyc customerKyc;
 	

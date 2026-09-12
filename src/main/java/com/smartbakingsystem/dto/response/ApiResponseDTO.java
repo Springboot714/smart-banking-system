@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ApiResponseDTO<T> {
 	
-	private String success;
+	private boolean success;
 	
 	private String message;
 	

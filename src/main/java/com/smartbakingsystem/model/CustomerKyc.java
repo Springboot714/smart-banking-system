@@ -29,7 +29,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Transactional
 @Table(name = "customer_kyc")
 public class CustomerKyc {
 	
